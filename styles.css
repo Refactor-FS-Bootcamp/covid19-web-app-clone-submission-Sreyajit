@@ -284,6 +284,9 @@ display: flex;
 width:50%;
 flex-wrap: wrap;
 }
+.skills{
+  padding: 2%;
+}
 .skill{
   height: 30em;
   display: flex;
@@ -382,13 +385,13 @@ form>label, select{
 }
 form>#button{
   align-items: center;
-  width:80px;
+  width:10rem;
   height:10%;
   margin:0;
   padding:0;
 }
 form>#button:hover{
-  width:9.9%;
+  width:9.9rem;
   height:9.9%;
 }
 footer{
