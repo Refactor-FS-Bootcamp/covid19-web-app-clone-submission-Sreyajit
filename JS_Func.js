@@ -1,10 +1,33 @@
+let skills = document.querySelector(".skills");
+let objectArray = [];
+let object = {};
+postSpace();
 function createObject() {
-	let object = {
+	object = {
 		title: document.getElementById("name").value,
 		description: document.getElementById("Query").value,
 		date: document.getElementById("Number").value,
 	};
-	let skills = document.getElementById("skills");
+	if (object.title !== "" && object.description !== "" && object.date !== "") {
+		objectArray.push(object);
+		localStorage.setItem("array", JSON.stringify(objectArray));
+	} else {
+		alert("please fill the full form");
+	}
+	postSpace();
+}
+function postSpace() {
+	let variable = JSON.parse(localStorage.getItem("array"));
+	if (variable == null) {
+		noObjectPresent();
+	} else {
+		skills.innerHTML = "";
+		variable.forEach((element) => {
+			cardCreator(element);
+		});
+	}
+}
+function cardCreator(object) {
 	let skill = document.createElement("div");
 	let title = document.createElement("h2");
 	let skillBody = document.createElement("div");
@@ -17,14 +40,17 @@ function createObject() {
 	deleteButton.id = "button";
 	deleteButton.className = "deleteButton";
 	title.innerText = "Title:" + object.title;
-	skillBody.innerText = "Description:" + object.description;
+	skillBody.innerText = object.description;
 	date.innerText = "Dated:" + object.date;
-	deleteButton.onclick = this.skill.remove();
 	skill.appendChild(title);
 	skill.appendChild(skillBody);
 	skill.appendChild(date);
 	skill.appendChild(deleteButton);
-    console.log(skill);
-	console.log(skill == null ? "skill is null" : "skill is not null");
 	skills.appendChild(skill);
+}
+function noObjectPresent() {
+	skills.innerHTML = "";
+	let h2 = document.createElement("h2");
+	h2.innerText = "Nothing to display here";
+	skills.appendChild(h2);
 }
