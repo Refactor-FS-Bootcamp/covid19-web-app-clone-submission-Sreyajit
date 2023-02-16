@@ -1,6 +1,7 @@
 let skills = document.querySelector(".skills");
 let objectArray = [];
 let object = {};
+let noOfPosts = 0;
 postSpace();
 function createObject() {
 	object = {
@@ -9,6 +10,7 @@ function createObject() {
 		date: document.getElementById("Number").value,
 	};
 	if (object.title !== "" && object.description !== "" && object.date !== "") {
+		object.id = `${++noOfPosts}`;//todo check why this object key value pair is not getting created yet
 		objectArray.push(object);
 		localStorage.setItem("array", JSON.stringify(objectArray));
 	} else {
@@ -47,10 +49,21 @@ function cardCreator(object) {
 	skill.appendChild(date);
 	skill.appendChild(deleteButton);
 	skills.appendChild(skill);
+	deleteButton.addEventListener("click", () => deleteObject(object));
 }
 function noObjectPresent() {
 	skills.innerHTML = "";
 	let h2 = document.createElement("h2");
-	h2.innerText = "Nothing to display here";
+	h2.innerText =
+		"No posts found to display- fill the above form and click on the submit button to add posts to display here";
 	skills.appendChild(h2);
+}
+function deleteObject(object) {
+	noOfPosts--;
+	let variable = JSON.parse(localStorage.getItem("array"));
+	indexToDelete = variable.findIndex(element => element.id === object.id);
+	variable.splice(indexToDelete, 1);
+	objectArray = [...variable];
+	localStorage.setItem("array", JSON.stringify(objectArray));
+	postSpace();
 }
